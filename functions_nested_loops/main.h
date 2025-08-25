@@ -1,21 +1,12 @@
-#include "main.h"
-#include <stdio.h>  /* لإستخدام printf */
+#ifndef MAIN_H
+#define MAIN_H
 
-int main(void)
-{
-    int r;
+int _putchar(char c);
+void print_alphabet(void);
+void print_alphabet_x10(void);
+int _islower(int c);
+int _isalpha(int c);
+int print_sign(int n);
 
-    r = print_sign(98);
-    printf(", %d\n", r);
+#endif
 
-    r = print_sign(0);
-    printf(", %d\n", r);
-
-    r = print_sign(0xff);
-    printf(", %d\n", r);
-
-    r = print_sign(-1);
-    printf(", %d\n", r);
-
-    return (0);
-}
