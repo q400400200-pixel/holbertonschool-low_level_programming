@@ -1,59 +1,66 @@
+#include <stdio.h>
 #include "main.h"
+#include <string.h>
+
+/**
+ * power - prints power
+ *
+ * @a: - int
+ * @b: - int
+ *
+ * My function
+ *
+ * Return: Always a or 1 (Success)
+ */
+
+int power(int a, int b)
+{
+	int i;
+	int j = a;
+
+	if (b == 0)
+		return (1);
+	for (i = 1; i < b; i++)
+	{
+		a *= j;
+	}
+	return (a);
+}
 
 /**
  * _atoi - convert a string to an integer
- * @s: input string
  *
- * Return: the integer value
+ * @s: pointer to an char
  *
- * Note:
- * We accumulate as a negative number to avoid overflow on INT_MIN.
- * After parsing, if the sign is positive, we return -result; otherwise result.
+ * Return: integer
  */
+
 int _atoi(char *s)
 {
 	int i = 0;
-	int sign = 1;
-	int result = 0;
-	int started = 0;
+	int k = 0;
+	int len = strlen(s);
+	int moins = 0;
+	unsigned int num = 0;
 
-	/* scan until digits; count all +/- before first digit */
-	while (s[i] != '\0')
+	if (s[0] == '\0')
+		return (0);
+	while (((s[i] < '0') || (s[i] > '9')) & (s[i] != '\0'))
 	{
 		if (s[i] == '-')
-		{
-			if (!started)
-				sign = -sign;
-		}
-		else if (s[i] == '+')
-		{
-			/* do nothing; only relevant before digits */
-		}
-		else if (s[i] >= '0' && s[i] <= '9')
-		{
-			int digit = s[i] - '0';
-
-			started = 1;
-			/* accumulate as negative to stay in range even at INT_MIN */
-			result = result * 10 - digit;
-		}
-		else if (started)
-		{
-			/* first non-digit after number -> stop */
-			break;
-		}
+			moins++;
 		i++;
 	}
-
-	/* if no digits were found, result is 0 -> returns 0 */
-	if (sign > 0)
+	if (i == len)
+		return (0);
+	while ((s[i + k] >= '0') & (s[i + k] <= '9'))
+		k++;
+	for (; k > 0; k--)
 	{
-		/* return the positive value without multiplying -1 during parse */
-		/* Beware: negating INT_MIN would overflow, but here result == INT_MIN
-		 * only when the digits exceeded INT_MAX; standard atoi is UB then.
-		 * Given project tests, this path avoids the sanitizer issues seen.
-		 */
-		return (-result);
+		num += (s[i] - '0') * power(10, (k - 1));
+		i++;
 	}
-	return (result);
+	if ((moins % 2) == 0)
+		return (num);
+	return (num *= (-1));
 }
