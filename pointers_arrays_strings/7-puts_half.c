@@ -1,28 +1,28 @@
-#include <stdio.h>
 #include "main.h"
-#include <string.h>
 
 /**
  * puts_half - prints half of a string
+ * @str: input string
  *
- * @str: char
- *
- * Not Return
+ * Return: void
  */
-
 void puts_half(char *str)
 {
-	int n = strlen(str);
-	int i = 0;
+	int len = 0, start, i;
 
-	if (n % 2 == 1)
-		n = (n / 2) + 1;
+	/* احسب طول النص */
+	while (str[len] != '\0')
+		len++;
+
+	/* حدد نقطة البداية */
+	if (len % 2 == 0)
+		start = len / 2;
 	else
-		n = n / 2;
-	while (str[n + i] != '\0')
-	{
-		_putchar(str[n + i]);
-		i++;
-	}
+		start = (len + 1) / 2;
+
+	/* اطبع من المنتصف إلى النهاية */
+	for (i = start; i < len; i++)
+		_putchar(str[i]);
+
 	_putchar('\n');
 }
